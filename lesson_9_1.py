@@ -2,7 +2,7 @@
 
 # Подсчитать статистику по буквам в романе Война и Мир.
 # Входные параметры: файл для сканирования
-# Статистику считать только для букв алфавита (см функцию .isalpha() для строк)
+# Статистику считать только для букв алфавита
 #
 # Вывести на консоль упорядоченную статистику в виде
 # +---------+----------+
@@ -18,21 +18,18 @@
 # |  итого  | 9999999  |
 # +---------+----------+
 #
-# Упорядочивание по частоте - по убыванию. Ширину таблицы подберите по своему вкусу
+# Упорядочивание по частоте - по убыванию.
 # Требования к коду: он должен быть готовым к расширению функциональности. Делать сразу на классах.
-
-# TODO здесь ваш код
-
 # После выполнения первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
 #  - по алфавиту по возрастанию
 #  - по алфавиту по убыванию
-# Для этого пригодится шаблон проектирование "Шаблонный метод" см https://goo.gl/Vz4828
 
 import zipfile
 
 
 class Grader:
+
     def __init__(self, zip_file_name=None, file_name=None):
         self.zip_file_name = zip_file_name
         self.file_name = file_name
@@ -51,7 +48,7 @@ class Grader:
         print(' {:^10} |'.format(b))
         print('+', '-' * 10, '+', '-' * 10, '+')
 
-    def creating_a_dictionary(self):  # создание словаря с символами и их количеством в файле
+    def creating_a_dictionary(self):  # создание словаря с символами и их количеством
         stat = {}
         if self.zip_file_name is not None:
             self.file_name = self.unziping()
@@ -67,20 +64,26 @@ class Grader:
         self.checking = True
 
     def checking_dictionary_creation(self):  # оптимизация для однократного создания словаря
-        if self.checking == False:
+        if not self.checking:
             self.creating_a_dictionary()
 
-    def sorted_by_value(self):
+    def sorted_by_value(self, revers=True):
         self.checking_dictionary_creation()
         summ = 0
         stat = self.dictionary
-        sorted_stat = sorted(stat.items(), key=lambda x: x[1], reverse=True)
+        sorted_stat = sorted(stat.items(), key=lambda x: x[1], reverse=revers)
         self.paint_for_table(a='буква', b='частота')
         for i in sorted_stat:
             print('| {:^10} '.format(i[0]), end='')
             print('| {:^10} |'.format(i[1]))
             summ += i[1]
         self.paint_for_table(a='итого', b=summ)
+
+    def sorted_by_value_descending(self):  # сортировка значений по убыванию
+        self.sorted_by_value()
+
+    def sorted_by_value_ascending(self):  # сортировка значений по возрастанию
+        self.sorted_by_value(revers=False)
 
     def sorted_by_keys(self, revers=True):
         self.checking_dictionary_creation()
@@ -102,8 +105,11 @@ class Grader:
         self.sorted_by_keys()
 
 
-a = Grader(file_name='voyna-i-mir.txt')
-a.sorted_by_value()
-a.sorted_by_keys()
-a.sorted_by_keys_ascending()
-a.sorted_by_keys_descending()
+test = Grader(file_name='voyna-i-mir.txt')
+
+test.sorted_by_value()
+# test.sorted_by_value_ascending()
+# test.sorted_by_value_descending()
+# test.sorted_by_keys()
+# test.sorted_by_keys_ascending()
+# test.sorted_by_keys_descending()
