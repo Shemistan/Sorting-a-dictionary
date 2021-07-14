@@ -51,7 +51,7 @@ class Grader:
         print(' {:^10} |'.format(b))
         print('+', '-' * 10, '+', '-' * 10, '+')
 
-    def creating_a_dictionary(self):
+    def creating_a_dictionary(self):  # создание словаря с символами и их количеством в файле
         stat = {}
         if self.zip_file_name is not None:
             self.file_name = self.unziping()
@@ -66,14 +66,14 @@ class Grader:
         self.dictionary = stat
         self.checking = True
 
-    def checking_dictionary_creation(self):
+    def checking_dictionary_creation(self):  # оптимизация для однократного создания словаря
         if self.checking == False:
             self.creating_a_dictionary()
 
     def sorted_by_value(self):
         self.checking_dictionary_creation()
-        stat = self.dictionary
         summ = 0
+        stat = self.dictionary
         sorted_stat = sorted(stat.items(), key=lambda x: x[1], reverse=True)
         self.paint_for_table(a='буква', b='частота')
         for i in sorted_stat:
