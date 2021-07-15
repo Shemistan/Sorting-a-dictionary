@@ -37,10 +37,13 @@ class Grader:
         self.checking = False
 
     def unziping(self):
+        file_name = ''
         zfile = zipfile.ZipFile(self.zip_file_name, 'r')
         for filename in zfile.namelist():
             zfile.extract(filename)
-            return filename
+            file_name = filename
+        zfile.close()
+        return file_name
 
     def paint_for_table(self, a, b):
         print('+', '-' * 10, '+', '-' * 10, '+')
@@ -105,11 +108,11 @@ class Grader:
         self.sorted_by_keys()
 
 
-test = Grader(file_name='voyna-i-mir.txt')
+test = Grader(zip_file_name='voyna-i-mir.txt.zip')
 
 test.sorted_by_value()
-# test.sorted_by_value_ascending()
-# test.sorted_by_value_descending()
-# test.sorted_by_keys()
-# test.sorted_by_keys_ascending()
-# test.sorted_by_keys_descending()
+test.sorted_by_value_ascending()
+test.sorted_by_value_descending()
+test.sorted_by_keys()
+test.sorted_by_keys_ascending()
+test.sorted_by_keys_descending()
